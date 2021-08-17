@@ -107,14 +107,20 @@ Use the higher-order function getWinnersByYear to do the following:
 2. Receive a callback function getYears from task 3
 3. Receive a callback function getWinners from task 4
 4. Return an array of strings that say "In {year}, {country} won the world cup!" 
-// receive 3 paramaters (data, getYearscb, getWinners), store the results in a var & use map over winners with index to refer to year and use item to refer to current value in winners
+// receive 3 paramaters (data, getYearscb, getWinnerscb), store the results in a var & use map over winners with index to refer to year and use item to refer to current value in winners
 hint: the strings returned need to exactly match the string in step 4.
  */
 
-function getWinnersByYear(/* code here */) {
-    /* code here */
+function getWinnersByYear(data, getYearscb, getWinnerscb) {
+    const theWinners = getWinnerscb(data, getFinals);
+    const years = getYearscb(data, getFinals);
+    const winners = theWinners.map(function(item, index){
+        return `In ${years[index]}, ${item} won the world cup!`;
+        
+    });
+    return winners;
 }
-
+console.log(getWinnersByYear(fifaData, getYears, getWinners));
 
 
 /* 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀 Task 6: 🚀🚀🚀🚀🚀🚀🚀🚀🚀🚀
@@ -128,10 +134,13 @@ Use the higher order function getAverageGoals to do the following:
 */
 // getfinalscb, use reduce, add up team goals and divide by length of array. 2 step process.
 // hint: lookup .toFixed(2);
-function getAverageGoals(/* code here */) {
-   /* code here */
+function getAverageGoals(getFinalscb) {
+   const totalGoals = getFinalscb.reduce(function(acc, item){
+    return acc + (item["Away Team Goals"] + item["Home Team Goals"]);
+   },0);
+   return (totalGoals / getFinalscb.length).toFixed(2);
 }
-
+console.log(getAverageGoals(getFinals(fifaData)));
 
 
 
